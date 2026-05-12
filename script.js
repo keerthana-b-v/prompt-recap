@@ -239,7 +239,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     toggleQuickSnap.addEventListener('click', () => {
         quickSnap.classList.toggle('collapsed');
-        toggleQuickSnap.textContent = quickSnap.classList.contains('collapsed') ? '↑' : '↓';
+        const isCollapsed = quickSnap.classList.contains('collapsed');
+        toggleQuickSnap.querySelector('span').textContent = isCollapsed ? '↑' : '↓';
     });
 
     openCompare.addEventListener('click', () => {
