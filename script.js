@@ -245,11 +245,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
     openCompare.addEventListener('click', () => {
         compareModal.style.display = 'block';
+        document.body.classList.add('no-scroll');
         updateComparison();
     });
 
     closeModal.addEventListener('click', () => {
         compareModal.style.display = 'none';
+        document.body.classList.remove('no-scroll');
     });
 
     compare1Select.addEventListener('change', updateComparison);
@@ -260,7 +262,10 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     window.onclick = (event) => {
-        if (event.target == compareModal) compareModal.style.display = 'none';
+        if (event.target == compareModal) {
+            compareModal.style.display = 'none';
+            document.body.classList.remove('no-scroll');
+        }
     }
 
     // Copy to Clipboard Helper

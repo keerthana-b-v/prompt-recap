@@ -34,10 +34,16 @@ body {
     overflow-x: hidden;
 }
 
+body.no-scroll {
+    overflow: hidden;
+}
+
 .container {
     max-width: 1100px;
     margin: 0 auto;
     padding: 0 20px;
+    width: 100%;
+    overflow-x: hidden; /* Prevent overflow within containers */
 }
 
 /* Typography */
@@ -77,13 +83,14 @@ body {
 
 .input-container {
     display: flex;
+    flex-wrap: wrap; /* Allow wrapping on small screens */
     gap: 15px;
     max-width: 800px;
     margin: 0 auto;
     padding: 15px;
     background: white;
-    border: 2px solid rgba(0, 0, 0, 0.1);
-    box-shadow: 5px 5px 0px rgba(0, 0, 0, 0.05);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
     border-radius: 12px;
 }
 
@@ -208,7 +215,7 @@ body {
 /* Comparison Grid */
 .comparison-grid {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     gap: 30px;
     margin-top: 30px;
 }
@@ -282,6 +289,19 @@ body {
 }
 
 /* Roadmap SVG */
+.roadmap-container {
+    width: 100%;
+    overflow-x: auto; /* Allow scrolling for the wide SVG if needed */
+    -webkit-overflow-scrolling: touch;
+}
+
+#roadmapSvg {
+    width: 100%;
+    height: auto;
+    min-width: 800px; /* Keep nodes readable */
+    display: block;
+}
+
 #roadmapSvg text {
     fill: var(--text-color) !important;
 }
@@ -289,20 +309,20 @@ body {
 .floating-btn {
     position: fixed;
     bottom: 30px;
-    left: 30px;
+    left: 20px;
     background: var(--text-color);
     color: white;
     border: none;
-    padding: 15px 30px;
+    padding: 12px 25px;
     border-radius: 30px;
     font-weight: 800;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
     cursor: pointer;
     z-index: 1001;
     font-family: var(--font-doodle);
-    font-size: 1.1rem;
+    font-size: 1rem;
     transition: transform 0.2s, background 0.2s;
-    border: 2px solid white;
+    border: 1px solid white;
 }
 
 .floating-btn:hover {
@@ -314,8 +334,9 @@ body {
 .quick-snap {
     position: fixed;
     bottom: 0;
-    right: 30px;
-    width: 320px;
+    right: 20px;
+    width: 300px;
+    max-width: calc(100% - 40px); /* Responsive width */
     background: white;
     border: 1px solid rgba(0,0,0,0.1);
     border-radius: 12px 12px 0 0;
@@ -361,6 +382,7 @@ body {
     background: rgba(44, 62, 80, 0.4);
     backdrop-filter: blur(4px);
     z-index: 2000;
+    overflow-y: auto; /* Enable modal scrolling */
 }
 
 .modal-content {
@@ -451,10 +473,23 @@ body {
     #mobileWarning {
         display: flex;
     }
-    .comparison-grid {
+    .doodle-title {
+        font-size: 2.2rem;
+    }
+    .subtitle {
+        font-size: 1rem;
+    }
+    .technique-card {
+        padding: 20px;
+    }
+    .technique-name {
+        font-size: 1.6rem;
+    }
+    .compare-display {
         grid-template-columns: 1fr;
     }
-    .doodle-title {
-        font-size: 2.5rem;
+    .floating-btn {
+        padding: 10px 20px;
+        font-size: 0.9rem;
     }
 }
