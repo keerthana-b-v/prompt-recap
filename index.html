@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Prompting Roadmap | Master AI Prompt Engineering</title>
+    <meta name="description" content="An interactive educational journey through 12 essential AI prompting techniques, from basic instructions to advanced reasoning strategies.">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Architects+Daughter&family=Inter:wght@400;600;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="style.css">
+    
+    <!-- Rough Doodle Filter -->
+    <svg style="display: none;">
+        <filter id="rough-edge">
+            <feTurbulence type="fractalNoise" baseFrequency="0.05" numOctaves="3" result="noise" />
+            <feDisplacementMap in="SourceGraphic" in2="noise" scale="1.5" />
+        </filter>
+    </svg>
+</head>
+<body class="dark-theme">
+    <!-- Mobile Warning Overlay -->
+    <div id="mobileWarning">
+        <div class="desktop-icon">🖥️</div>
+        <h2>Desktop View Recommended</h2>
+        <p>This interactive roadmap contains complex visual elements best experienced on a larger screen.</p>
+        <button id="continueAnyway">Continue to Mobile View</button>
+    </div>
+
+    <div id="app">
+        <!-- Hero Section -->
+        <header class="hero">
+            <div class="container">
+                <h1 class="doodle-title">The Prompting Roadmap</h1>
+                <p class="subtitle">One input. 12 techniques. <span class="neon-text">Infinite clarity.</span></p>
+                
+                <div class="input-container">
+                    <input type="text" id="userInput" placeholder="Plan a trip to Goa" value="Plan a trip to Goa">
+                    <button id="transformBtn" class="cta-button">Transform My Prompt</button>
+                </div>
+            </div>
+        </header>
+
+        <!-- Visual Roadmap -->
+        <section id="roadmap" class="roadmap-section">
+            <div class="container">
+                <div class="roadmap-container" id="roadmapContainer">
+                    <!-- SVG Spiral will be injected here -->
+                    <svg id="roadmapSvg" viewBox="0 0 1000 600"></svg>
+                </div>
+            </div>
+        </section>
+
+        <!-- Main Content -->
+        <main class="container">
+            <div id="technique-grid" class="technique-grid">
+                <!-- Technique cards will be injected here -->
+            </div>
+        </main>
+
+        <!-- Quick-Snap Panel -->
+        <aside id="quickSnap" class="quick-snap">
+            <div class="quick-snap-header">
+                <h3>Quick Cheat Sheet</h3>
+                <button id="toggleQuickSnap">↓</button>
+            </div>
+            <div class="quick-snap-content" id="quickSnapList">
+                <!-- Formulas injected here -->
+            </div>
+        </aside>
+
+        <!-- Compare Mode Modal -->
+        <div id="compareModal" class="modal">
+            <div class="modal-content">
+                <span class="close-modal">&times;</span>
+                <h2>Compare Mode</h2>
+                <div class="compare-selectors">
+                    <select id="compare1"></select>
+                    <span>VS</span>
+                    <select id="compare2"></select>
+                </div>
+                <div class="compare-display">
+                    <div id="compareCard1" class="compare-side"></div>
+                    <div id="compareCard2" class="compare-side"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Floating Compare Toggle -->
+        <button id="openCompare" class="floating-btn">Compare Mode</button>
+    </div>
+
+    <script src="data.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
