@@ -363,13 +363,44 @@ body {
     color: var(--text-color);
 }
 
-/* Mobile Warning */
+/* Mobile Warning Overlay */
 #mobileWarning {
+    display: none; /* Hidden by default */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
     background: var(--bg-color);
+    z-index: 9999;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 30px;
+}
+
+#mobileWarning .desktop-icon {
+    font-size: 5rem;
+    margin-bottom: 20px;
+}
+
+#mobileWarning h2 {
+    font-family: var(--font-doodle);
+    margin-bottom: 15px;
+}
+
+#mobileWarning p {
+    max-width: 400px;
+    margin-bottom: 30px;
+    color: var(--text-secondary);
 }
 
 /* Responsive */
 @media (max-width: 768px) {
+    #mobileWarning {
+        display: flex;
+    }
     .comparison-grid {
         grid-template-columns: 1fr;
     }
