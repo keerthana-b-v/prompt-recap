@@ -32,7 +32,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const beforePrompt = "Plan a trip to Goa"; 
             const highlightedPrompt = tech.getHighlightedPrompt(currentTopic);
             const afterPrompt = tech.getAfterPrompt(currentTopic);
-            const aiOutput = tech.getOutput(currentTopic);
+            const aiOutput = tech.getAfterOutput(currentTopic);
 
             card.innerHTML = `
                 <div class="card-header">
@@ -102,7 +102,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function renderRoadmap() {
         const width = 1000;
-        const height = 400;
+        const height = 600;
         roadmapSvg.innerHTML = '';
 
         // Draw Arc Path (Left to Right)
