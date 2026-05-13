@@ -10,6 +10,8 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Architects+Daughter&family=Inter:wght@400;600;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <!-- Lucide Icons for GitHub -->
+    <script src="https://unpkg.com/lucide@latest"></script>
     
     <link rel="stylesheet" href="style.css">
     
@@ -31,6 +33,11 @@
     </div>
 
     <div id="app">
+        <a href="https://github.com/keerthana-b-v/prompt-recap" target="_blank" class="github-corner" aria-label="View source on GitHub">
+            <i data-lucide="github"></i>
+            <span>View Code</span>
+        </a>
+
         <!-- Hero Section -->
         <header class="hero">
             <div class="container">
@@ -91,9 +98,21 @@
 
         <!-- Floating Compare Toggle -->
         <button id="openCompare" class="floating-btn">Compare Mode</button>
+
+        <footer class="main-footer">
+            <div class="container">
+                <p>Designed with ❤️ for AI enthusiasts.</p>
+                <a href="https://github.com/keerthana-b-v/prompt-recap" target="_blank">
+                    <i data-lucide="github" style="width: 16px; vertical-align: middle;"></i> github.com/keerthana-b-v/prompt-recap
+                </a>
+            </div>
+        </footer>
     </div>
 
     <script src="data.js"></script>
     <script src="script.js"></script>
+    <script>
+      lucide.createIcons();
+    </script>
 </body>
 </html>

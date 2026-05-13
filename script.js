@@ -39,61 +39,70 @@ document.addEventListener('DOMContentLoaded', () => {
                     <h2 class="technique-name">${index + 1}. ${tech.name}</h2>
                     <span class="difficulty-badge" style="background: var(--${tech.difficulty})">${tech.difficulty}</span>
                 </div>
-                <p class="definition">${tech.definition}</p>
                 
-                <div class="info-section humor-box">
-                    <strong>🤡 The Reality Check</strong>
-                    ${tech.humor}
-                </div>
+                <details class="technique-content-accordion">
+                    <summary class="mobile-only-summary">View Technique Details</summary>
+                    
+                    <div class="card-body-content">
+                        <p class="definition">${tech.definition}</p>
+                        
+                        <div class="info-section-container">
+                            <div class="info-section humor-box">
+                                <strong>🤡 The Reality Check</strong>
+                                <div>${tech.humor}</div>
+                            </div>
 
-                <div class="info-section daily-box">
-                    <strong>🏠 Daily Life Use Case</strong>
-                    ${tech.dailyUseCase}
-                </div>
+                            <div class="info-section daily-box">
+                                <strong>🏠 Daily Life Use Case</strong>
+                                <div>${tech.dailyUseCase}</div>
+                            </div>
 
-                <div class="info-section myspin-box">
-                    <strong>🕵️‍♂️ My Personal Sneaky Spin</strong>
-                    "${tech.mySpin}"
-                </div>
-
-                <div class="formula-box">
-                    <strong>Formula:</strong> ${tech.formula}
-                </div>
-
-                <div class="comparison-grid">
-                    <div class="comparison-side">
-                        <div class="prompt-area">
-                            <span class="prompt-label">Before Prompt</span>
-                            <div class="prompt-content">${beforePrompt}</div>
+                            <div class="info-section myspin-box">
+                                <strong>🕵️‍♂️ My Personal Sneaky Spin</strong>
+                                <div>"${tech.mySpin}"</div>
+                            </div>
                         </div>
-                        <div class="ai-output" style="border-color: #eee; background: #fafafa;">
-                            <h4 style="color: #888;">Before Output</h4>
-                            <div class="prompt-content" style="color: #666; font-size: 0.85rem;">${tech.getBeforeOutput(currentTopic)}</div>
+
+                        <div class="formula-box">
+                            <strong>Formula:</strong> ${tech.formula}
                         </div>
+
+                        <div class="comparison-grid">
+                            <div class="comparison-side">
+                                <div class="prompt-area">
+                                    <span class="prompt-label">Before Prompt</span>
+                                    <div class="prompt-content">${beforePrompt}</div>
+                                </div>
+                                <div class="ai-output" style="border-color: #eee; background: #fafafa;">
+                                    <h4 style="color: #888;">Before Output</h4>
+                                    <div class="prompt-content" style="color: #666; font-size: 0.85rem;">${tech.getBeforeOutput(currentTopic)}</div>
+                                </div>
+                            </div>
+                            <div class="comparison-side">
+                                <div class="prompt-area">
+                                    <span class="prompt-label">After (Technique)</span>
+                                    <div class="prompt-content">${highlightedPrompt}</div>
+                                </div>
+                                <div class="ai-output">
+                                    <h4>After Output</h4>
+                                    <div class="prompt-content">${tech.getAfterOutput(currentTopic)}</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="pro-tip">
+                            <strong>💡 Pro Tip:</strong> ${tech.proTip}
+                        </div>
+
+                        <div class="card-actions">
+                            <button class="action-btn" onclick="copyText('${afterPrompt.replace(/'/g, "\\'")}')">Copy Prompt</button>
+                        </div>
+
+                        <details class="why-works" style="margin-top: 20px; color: var(--text-secondary);">
+                            <summary style="cursor: pointer; font-weight: 700;">Why This Works</summary>
+                            <p style="margin-top: 10px; font-size: 0.9rem;">${tech.whyWorks}</p>
+                        </details>
                     </div>
-                    <div class="comparison-side">
-                        <div class="prompt-area">
-                            <span class="prompt-label">After (Technique)</span>
-                            <div class="prompt-content">${highlightedPrompt}</div>
-                        </div>
-                        <div class="ai-output">
-                            <h4>After Output</h4>
-                            <div class="prompt-content">${tech.getAfterOutput(currentTopic)}</div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="pro-tip">
-                    <strong>💡 Pro Tip:</strong> ${tech.proTip}
-                </div>
-
-                <div class="card-actions">
-                    <button class="action-btn" onclick="copyText('${afterPrompt.replace(/'/g, "\\'")}')">Copy Prompt</button>
-                </div>
-
-                <details class="why-works" style="margin-top: 20px; color: var(--text-secondary);">
-                    <summary style="cursor: pointer; font-weight: 700;">Why This Works</summary>
-                    <p style="margin-top: 10px; font-size: 0.9rem;">${tech.whyWorks}</p>
                 </details>
             `;
             techniqueGrid.appendChild(card);
@@ -147,10 +156,9 @@ document.addEventListener('DOMContentLoaded', () => {
             const circle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
             circle.setAttribute("cx", p.x);
             circle.setAttribute("cy", p.y);
-            circle.setAttribute("r", "18");
+            circle.setAttribute("r", "10"); // Smaller dot
             circle.setAttribute("fill", `var(--${p.tech.difficulty})`);
-            circle.setAttribute("stroke", "white");
-            circle.setAttribute("stroke-width", "3");
+            circle.setAttribute("opacity", "0.8");
             
             // Stagger labels to avoid overlap
             const isTop = i % 2 === 0;
