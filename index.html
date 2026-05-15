@@ -9,10 +9,11 @@
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Architects+Daughter&family=Inter:wght@400;600;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Architects+Daughter&family=Poppins:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
     <!-- Lucide Icons for GitHub -->
     <script src="https://unpkg.com/lucide@latest"></script>
     
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🗺️</text></svg>">
     <link rel="stylesheet" href="style.css">
     
     <!-- Rough Doodle Filter -->
@@ -42,7 +43,7 @@
         <header class="hero">
             <div class="container">
                 <h1 class="doodle-title">The Prompting Roadmap</h1>
-                <p class="subtitle">One input. 12 techniques. <span class="neon-text">Infinite clarity.</span></p>
+                <p class="subtitle">One input. 12 techniques. <span class="accent-text">Infinite clarity.</span></p>
                 
                 <div class="input-container">
                     <input type="text" id="userInput" placeholder="Plan a trip to Goa" value="Plan a trip to Goa">
@@ -55,8 +56,8 @@
         <section id="roadmap" class="roadmap-section">
             <div class="container">
                 <div class="roadmap-container" id="roadmapContainer">
-                    <!-- SVG Spiral will be injected here -->
-                    <svg id="roadmapSvg" viewBox="0 0 1000 600"></svg>
+                    <!-- SVG Roadmap will be injected here -->
+                    <svg id="roadmapSvg" viewBox="0 0 1000 300"></svg>
                 </div>
             </div>
         </section>
@@ -111,8 +112,5 @@
 
     <script src="data.js"></script>
     <script src="script.js"></script>
-    <script>
-      lucide.createIcons();
-    </script>
 </body>
 </html>

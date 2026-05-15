@@ -21,6 +21,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const compareCard2 = document.getElementById('compareCard2');
 
     let currentTopic = userInput.value;
+    
+    function escapeHTML(str) {
+        const div = document.createElement('div');
+        div.textContent = str;
+        return div.innerHTML;
+    }
 
     function renderCards() {
         techniqueGrid.innerHTML = '';
@@ -29,24 +35,68 @@ document.addEventListener('DOMContentLoaded', () => {
             card.className = 'technique-card';
             card.id = `tech-${tech.id}`;
             
+            const safeTopic = escapeHTML(currentTopic);
             const beforePrompt = "Plan a trip to Goa"; 
-            const highlightedPrompt = tech.getHighlightedPrompt(currentTopic);
-            const afterPrompt = tech.getAfterPrompt(currentTopic);
-            const aiOutput = tech.getAfterOutput(currentTopic);
+            const highlightedPrompt = tech.getHighlightedPrompt(safeTopic);
+            const afterPrompt = tech.getAfterPrompt(safeTopic);
+            const aiOutput = tech.getAfterOutput(safeTopic);
 
             card.innerHTML = `
                 <div class="card-header">
-                    <h2 class="technique-name">${index + 1}. ${tech.name}</h2>
+                    <div>
+                        <h2 class="technique-name">${index + 1}. ${tech.name}</h2>
+                        <p class="definition" style="margin-top: 5px; margin-bottom: 0;">${tech.definition}</p>
+                    </div>
                     <span class="difficulty-badge" style="background: var(--${tech.difficulty})">${tech.difficulty}</span>
                 </div>
                 
-                <details class="technique-content-accordion">
-                    <summary class="mobile-only-summary">View Technique Details</summary>
+                <details class="technique-content-accordion" ${index === 0 ? 'open' : ''}>
+                    <summary class="technique-summary">
+                        <div class="summary-trigger">
+                            <span class="expand-icon">+</span>
+                            <span class="summary-text">Click to read more</span>
+                        </div>
+                    </summary>
                     
                     <div class="card-body-content">
-                        <p class="definition">${tech.definition}</p>
-                        
-                        <div class="info-section-container">
+                        <!-- 1. The How-To -->
+                        <div class="formula-box">
+                            <span class="box-label">The Formula</span>
+                            <div class="formula-content">${tech.formula}</div>
+                        </div>
+
+                        <!-- 2. The Proof -->
+                        <div class="comparison-grid">
+                            <div class="comparison-side">
+                                <div class="prompt-area">
+                                    <span class="prompt-label">Before Prompt</span>
+                                    <div class="prompt-content">${beforePrompt}</div>
+                                </div>
+                                <div class="ai-output before-output">
+                                    <h4 class="output-label">Before Output</h4>
+                                    <div class="prompt-content">${tech.getBeforeOutput(currentTopic)}</div>
+                                </div>
+                            </div>
+                            <div class="comparison-side">
+                                <div class="prompt-area active-prompt">
+                                    <span class="prompt-label">After (Technique Applied)</span>
+                                    <div class="prompt-content">${highlightedPrompt}</div>
+                                </div>
+                                <div class="ai-output after-output">
+                                    <h4 class="output-label">After Output</h4>
+                                    <div class="prompt-content">${tech.getAfterOutput(currentTopic)}</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 3. The Science (Now Open and Before Context) -->
+                        <div class="why-works-box">
+                            <strong>🧠 Why This Works (The Science)</strong>
+                            <p>${tech.whyWorks}</p>
+                        </div>
+
+                        <!-- 4. The Context -->
+                        <div class="pedagogical-grid">
                             <div class="info-section humor-box">
                                 <strong>🤡 The Reality Check</strong>
                                 <div>${tech.humor}</div>
@@ -63,45 +113,10 @@ document.addEventListener('DOMContentLoaded', () => {
                             </div>
                         </div>
 
-                        <div class="formula-box">
-                            <strong>Formula:</strong> ${tech.formula}
-                        </div>
-
-                        <div class="comparison-grid">
-                            <div class="comparison-side">
-                                <div class="prompt-area">
-                                    <span class="prompt-label">Before Prompt</span>
-                                    <div class="prompt-content">${beforePrompt}</div>
-                                </div>
-                                <div class="ai-output" style="border-color: #eee; background: #fafafa;">
-                                    <h4 style="color: #888;">Before Output</h4>
-                                    <div class="prompt-content" style="color: #666; font-size: 0.85rem;">${tech.getBeforeOutput(currentTopic)}</div>
-                                </div>
-                            </div>
-                            <div class="comparison-side">
-                                <div class="prompt-area">
-                                    <span class="prompt-label">After (Technique)</span>
-                                    <div class="prompt-content">${highlightedPrompt}</div>
-                                </div>
-                                <div class="ai-output">
-                                    <h4>After Output</h4>
-                                    <div class="prompt-content">${tech.getAfterOutput(currentTopic)}</div>
-                                </div>
-                            </div>
-                        </div>
-
+                        <!-- 5. The Expert Edge -->
                         <div class="pro-tip">
                             <strong>💡 Pro Tip:</strong> ${tech.proTip}
                         </div>
-
-                        <div class="card-actions">
-                            <button class="action-btn" onclick="copyText('${afterPrompt.replace(/'/g, "\\'")}')">Copy Prompt</button>
-                        </div>
-
-                        <details class="why-works" style="margin-top: 20px; color: var(--text-secondary);">
-                            <summary style="cursor: pointer; font-weight: 700;">Why This Works</summary>
-                            <p style="margin-top: 10px; font-size: 0.9rem;">${tech.whyWorks}</p>
-                        </details>
                     </div>
                 </details>
             `;
@@ -110,31 +125,27 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function renderRoadmap() {
-        const width = 1000;
-        const height = 600;
         roadmapSvg.innerHTML = '';
+        roadmapSvg.setAttribute('viewBox', '0 0 1000 300'); // Reduced height
 
-        // Draw Arc Path (Left to Right)
+        // Draw Straight Path (Left to Right)
         const points = [];
         const startX = 100;
         const endX = 900;
-        const baseY = 300;
-        const peakY = 50;
+        const baseY = 150; // Center vertically
 
         for (let i = 0; i < 12; i++) {
             const t = i / 11;
-            // Quadratic Bezier-like Arc
             const x = startX + t * (endX - startX);
-            const y = baseY - Math.sin(t * Math.PI) * (baseY - peakY);
+            const y = baseY; // Straight line
             points.push({ x, y, tech: techniques[i] });
         }
 
         // Draw connecting lines
         let pathD = `M ${points[0].x} ${points[0].y}`;
         for (let i = 1; i < points.length; i++) {
-            // Curvy path
-            const midX = (points[i-1].x + points[i].x) / 2;
-            pathD += ` Q ${midX} ${points[i].y - 20}, ${points[i].x} ${points[i].y}`;
+            // Straight line path
+            pathD += ` L ${points[i].x} ${points[i].y}`;
         }
 
         const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
@@ -150,7 +161,10 @@ document.addEventListener('DOMContentLoaded', () => {
             const group = document.createElementNS("http://www.w3.org/2000/svg", "g");
             group.setAttribute("class", "roadmap-node");
             group.onclick = () => {
-                document.getElementById(`tech-${p.tech.id}`).scrollIntoView({ behavior: 'smooth' });
+                const card = document.getElementById(`tech-${p.tech.id}`);
+                const details = card.querySelector('details');
+                if (details) details.setAttribute('open', '');
+                card.scrollIntoView({ behavior: 'smooth' });
             };
 
             const circle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
@@ -168,10 +182,10 @@ document.addEventListener('DOMContentLoaded', () => {
             text.setAttribute("x", p.x);
             text.setAttribute("y", textY);
             text.setAttribute("text-anchor", "middle");
-            text.setAttribute("fill", "#2c3e50");
-            text.setAttribute("font-size", "12");
-            text.setAttribute("font-weight", "500");
-            text.setAttribute("font-family", "Inter, sans-serif");
+            text.setAttribute("fill", "#2B3674");
+            text.setAttribute("font-size", "13");
+            text.setAttribute("font-weight", "600");
+            text.setAttribute("font-family", "Poppins, sans-serif");
             text.textContent = p.tech.name;
 
             group.appendChild(circle);
@@ -185,10 +199,22 @@ document.addEventListener('DOMContentLoaded', () => {
         techniques.forEach(tech => {
             const item = document.createElement('div');
             item.className = 'snap-item';
+            item.style.cursor = 'pointer';
             item.innerHTML = `
-                <h4 style="font-family: 'Architects Daughter'; color: var(--text-color); margin-bottom: 5px;">${tech.name}</h4>
-                <div class="snap-formula" style="background: #f8f9fa; border: 1px solid #eee; padding: 10px; border-radius: 6px;">${tech.formula}</div>
+                <h4 style="font-family: var(--font-body); color: var(--text-color); margin-bottom: 5px; font-weight: 600;">${tech.name}</h4>
+                <div class="snap-formula" style="background: #f8f9fa; border: 1px solid #eee; padding: 10px; border-radius: 6px; font-size: 0.85rem;">${tech.formula}</div>
             `;
+            item.onclick = () => {
+                const card = document.getElementById(`tech-${tech.id}`);
+                const details = card.querySelector('details');
+                if (details) details.setAttribute('open', '');
+                card.scrollIntoView({ behavior: 'smooth' });
+                // Optional: close the snap panel on mobile after click
+                if (window.innerWidth <= 768) {
+                    quickSnap.classList.add('collapsed');
+                    toggleQuickSnap.querySelector('span').textContent = '↑';
+                }
+            };
             quickSnapList.appendChild(item);
         });
     }
@@ -214,22 +240,22 @@ document.addEventListener('DOMContentLoaded', () => {
         const t1 = techniques.find(t => t.id === compare1Select.value);
         const t2 = techniques.find(t => t.id === compare2Select.value);
 
+        const safeTopic = escapeHTML(currentTopic);
         [ {t: t1, el: compareCard1}, {t: t2, el: compareCard2} ].forEach(pair => {
             pair.el.innerHTML = `
                 <div class="difficulty-badge" style="background: var(--${pair.t.difficulty}); margin-bottom: 10px; display: inline-block;">${pair.t.difficulty}</div>
-                <h3 style="font-size: 1.5rem; margin-bottom: 15px;">${pair.t.name}</h3>
+                <h3 style="font-size: 1.5rem; margin-bottom: 15px; font-weight: 700;">${pair.t.name}</h3>
                 
                 <div class="info-section daily-box" style="margin: 10px 0; font-size: 0.85rem;">
                     <strong>Best for Daily Life:</strong> ${pair.t.dailyUseCase}
                 </div>
-
                 <div class="prompt-area">
                     <span class="prompt-label">The Strategy</span>
-                    <div class="prompt-content">${pair.t.getHighlightedPrompt(currentTopic)}</div>
+                    <div class="prompt-content">${pair.t.getHighlightedPrompt(safeTopic)}</div>
                 </div>
                 <div class="ai-output" style="margin-top: 15px; padding: 15px;">
-                    <h4 style="font-size: 1rem; font-family: 'Inter', sans-serif;">AI Response</h4>
-                    <div class="prompt-content" style="font-size: 0.85rem;">${pair.t.getAfterOutput(currentTopic)}</div>
+                    <h4 style="font-size: 1rem; font-family: var(--font-body); font-weight: 600;">AI Response</h4>
+                    <div class="prompt-content" style="font-size: 0.85rem;">${pair.t.getAfterOutput(safeTopic)}</div>
                 </div>
             `;
         });
@@ -288,4 +314,9 @@ document.addEventListener('DOMContentLoaded', () => {
     renderRoadmap();
     renderQuickSnap();
     populateCompareSelects();
+
+    // Initialize Icons
+    if (window.lucide) {
+        lucide.createIcons();
+    }
 });

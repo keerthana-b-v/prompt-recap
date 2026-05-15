@@ -11,8 +11,8 @@ const techniques = [
         mySpin: "I use this to write 'polite-sounding' rejections to group project invites I don't want to join.",
         proTip: "Use strong action verbs like 'Summarize', 'Calculate', or 'Translate' to start your prompt.",
         whyWorks: "LLMs are trained to follow instructions. Being clear and direct minimizes ambiguity for simple tasks.",
-        getAfterPrompt: (input) => `${input}`,
-        getHighlightedPrompt: (input) => `<span class="highlight-ink">${input}</span>`,
+        getAfterPrompt: (input) => `Please create a detailed, structured 3-day itinerary for a trip to ${input}.`,
+        getHighlightedPrompt: (input) => `<span class="highlight-ink">Please create a detailed, structured 3-day itinerary for a trip to</span> ${input}.`,
         getBeforeOutput: (input) => `[Standard Response]: I will ${input.toLowerCase()}. (Very generic and might miss details).`,
         getAfterOutput: (input) => `### Itinerary for: ${input}\n\n1. Day 1: Arrive and check into a beach resort.\n2. Day 2: Visit local landmarks and explore the markets.\n3. Day 3: Enjoy water sports and a sunset dinner.`
     },
